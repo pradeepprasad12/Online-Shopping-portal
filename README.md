@@ -1,2 +1,5 @@
 # Online-Shopping-portal
-Using python Django Sqlite
+Using python Django 
+html-css-boostrap
+js-ajax-json
+Sqlite
