@@ -1,0 +1,32 @@
+{% extends 'shop/basic.html' %}
+{% block title %} registaion page{% endblock %}
+{% block body %}
+
+<div class="container">
+    <div class="row center">
+        <div class="col-md-6 offset-md-3">
+            
+
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="usr" value="{{usr.username}}">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" id="basic-addon1">OTP</span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Please Enter OTP" aria-label="OTP" aria-describedby="basic-addon1" name="otp">
+                        <button type="submit" class="btn btn-primary">Verify</button>
+                        <p><a href="#" onclick="ReSendOTP('{{usr.username}}', 'resendOTP')"><i id="resendOTP">Resend</i>  OTP</a></p>
+                      </div>   
+                </form>
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <p>please enter mininum 1 alphabet, 1 numeric, 1 uppercase, 1 lowercase and minimum 8 characters</p>
+                    <button type="submit" class="btn btn-primary">Sign Up</button>
+                    <p>Already have an account? <a href="{% url 'accounts:login' %}">Login Here</a></p>
+                </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

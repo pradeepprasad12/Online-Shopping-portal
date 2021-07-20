@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    <title>{% block title %} {% endblock %}</title>
+
+{% block css %}
+     <style>
+
+mark {
+  background-color: yellow;
+  color: red;
+}
+        .col-md-3
+          {
+          display: inline-block;
+          margin-left:-4px;
+          }
+
+          .carousel-indicators .active {
+          background-color: blue;
+            }
+
+          .col-md-3 img{
+
+          width: 170px;
+          height: 200px;
+          }
+
+          body .carousel-indicator li{
+          background-color: blue;
+          }
+
+          body .carousel-indicators{
+          bottom: -40px;
+          }
+
+          body .carousel-control-prev-icon,
+          body .carousel-control-next-icon{
+          background-color: blue;
+          }
+
+          .carousel-control-prev,
+          .carousel-control-next{
+          top: auto;
+          bottom: auto;
+          padding-top: 222px;
+          }
+           body .no-padding{
+           padding-left: 0,
+           padding-right: 0;
+           }
+    </style>
+{% endblock %}
+
+</head>
+
+<body>
+<!--{% load static %}-->
+
+    <!--  navigation bar code starts here-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/shop">My shopping Cart</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/shop">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/shop/about/">about</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/shop/contact/">contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/shop/tracker/">tracker</a>
+                </li>
+                {% if user.is_authenticated %}
+
+                        <li class="nav-item dropdown">
+                        <a class="nav-item nav-link dropdown-toggle active mr-md-2" href="#" id="bd-versions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{request.user}}
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="bd-versions">
+                            <a class="dropdown-item" href="/shop/profile/"><b><i>Profile</i></b></a>
+                          </div>
+                        </li>
+
+
+
+                {% else %}
+                {% endif %}
+
+
+            </ul>
+
+             <form method="get" action="/shop/search/" class="form-inline my-2 my-lg-0 mx-3">
+
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search" id="search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+
+
+            {% if user.is_authenticated %}
+            <ul class="navbar-nav mr-1 ">
+            <li class="nav-item">
+                    <a class=" btn btn-outline-success" href="/shop/logout">Logout</a>
+            </li></ul>
+`
+            <button type="button" class="btn btn-secondary mx-3" id="popcart" data-container="body" data-toggle="popover" data-placement="bottom" data-html="true" data-content="Vivamus
+            sagittis lacus vel augue laoreet rutrum faucibus.">
+            Cart(<span id="cart">0</span>)
+            </button>
+
+
+
+            {% else %}
+
+            <!-- Button signup modal -->
+            <button type="button" class="btn btn-success mr-2" data-toggle="modal" data-target="#signupmodal">Sign Up</button>
+            <button type="button" class="btn btn-success mr-2" data-toggle="modal" data-target="#loginmodal">Login Up</button>
+            {% endif %}
+        </div>
+    </nav>
+{% for message in messages  %}
+      <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            <strong>Message : </strong> {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+      </div>
+
+{% endfor %}
+<!-- signup modal ------------------------------------------------->
+<div class="modal fade" id="signupmodal" tabindex="-1" role="dialog" aria-labelledby="signupmodal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="signupmodaltitle">SignUp Hare...</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+   <form action="/shop/signup/" method='post'>
+       {% csrf_token %}
+  <div class="form-group">
+    <label for="username">username</label>
+    <input type="text" class="form-control" id="username" name="username" placeholder="choose unique name" required>
+  </div>
+   <div class="form-group">
+    <label for="fname">firstname</label>
+    <input type="text" class="form-control" id="fname" name="fname" placeholder="first  name" required>
+  </div>
+   <div class="form-group">
+    <label for="lname">lasttname</label>
+    <input type="text" class="form-control" id="lname" name="lname" placeholder="last  name" required>
+  </div>
+<div class="form-group">
+    <label for="email">Email address</label>
+    <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required>
+  </div>
+ <div class="form-group">
+    <label for="pass1">password</label>
+    <input type="password" class="form-control" id="pass1" name="pass1" placeholder="password" required>
+  </div>
+  <div class="form-group">
+    <label for="pass2">conform password</label>
+    <input type="password" class="form-control" id="pass2" name="pass2" placeholder="conform password" required>
+  </div>
+       {% csrf_token %}
+   <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- login modal ------------------------------------------------->
+<div class="modal fade" id="loginmodal" tabindex="-1" role="dialog" aria-labelledby="loginmodal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginmodaltitle">Login Hare...</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+            <form action="/shop/login/" method='post'>
+
+<div class="form-group">
+    <label for="loginusername">User Name</label>
+    <input type="text" class="form-control" id="loginusername" name="loginusername" placeholder="enter your username" required>
+  </div>
+ <div class="form-group">
+    <label for="loginpassword">password</label>
+    <input type="password" class="form-control" id="loginpassword" name="loginpassword" placeholder="enter your password" required>
+  </div>
+    {% csrf_token %}
+   <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% block body %} {% endblock %}
+<!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+{% block js %}
+
+{% endblock %}
+</body>
+    <!--nav bar code ends here-->
+</html>

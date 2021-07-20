@@ -1,0 +1,38 @@
+{% extends 'shop/basic.html' %}
+{% block title %} profile page{% endblock %}
+
+{% block body %}
+{% load static %}
+<div class="container">
+	<div class="row gutters">
+		<div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
+			<div class="card h-100"><div class="card-body">
+				<div class="account-settings">
+					<div class="user-profile">
+						<div class="user-avatar">
+							<img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" width="233px" height="385px">
+							</div>
+							  <h6 class="user-uname">User Name.{{user.username}}</h6>
+							  <h6 class="user-name">First Name.{{user.first_name}} </h6>
+							  <h6 class="user-name">Last Name.{{user.last_name}}</h6>
+							  <h6 class="user-email">Email. {{user.email}}</h6>
+							</div>
+				        </div>
+		        	</div>
+				<div class="row gutters">
+						<div class="col-xl-10 col-lg-10 col-md-12 col-sm-12 col-12">
+							<div class="text-center">
+								<a href="/shop/profile/edit_profile/"> <button class="btn btn-primary  " type="button">Edit</button></a>
+								<a href="/shop/"> <button class="btn btn-primary  " type="button">Back</button></a>
+
+							</div>
+						</div>
+			</div>
+			    </div>
+
+		    </div>
+
+
+	</div>
+</div>
+{% endblock %}
